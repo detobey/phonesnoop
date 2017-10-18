@@ -29,6 +29,8 @@ ask = Ask(app, "/")
             mapping={'user_phone': 'Number'})
 def snoop(user_phone):
 
+    '''Interestingly, this variable is not passed to the 'snoop' method when
+    defined outside the method itself.'''
     api_key = '44876e6153c949ff812ce6dd8c823e1f'
 
     if int(user_phone[:1]) != 1 and len(str(user_phone)) != 10 or int(

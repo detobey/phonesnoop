@@ -1,1 +1,8 @@
-snoop {Number}
+snoop Snoop {Number}
+snoop Look up {Number}
+snoop Check {Number}
+snoop Who is {Number}
+snoop Who does {Number} belong to
+snoop Check caller ID for {Number}
+snoop Check caller ID on {Number}
+snoop Caller ID {Number}
