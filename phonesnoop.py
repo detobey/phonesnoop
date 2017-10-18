@@ -18,16 +18,14 @@ from flask_ask import Ask, statement, question, session
 #### Skill Metadata
 app = Flask(__name__)
 ask = Ask(app, "/")
-api_key = '44876e6153c949ff812ce6dd8c823e1f'
+#api_key = '44876e6153c949ff812ce6dd8c823e1f'
 
 #### Classes & Methods
-@ask.intent("Snoop",
-            mapping={'user_phone': 'Number'},
-            convert={'user_phone': 'int'})
-def snoop(user_phone, api_key):
+@ask.intent("snoop",
+            mapping={'user_phone': 'Number'})
+def snoop(user_phone):
 
-    if type(user_phone) != int:
-        return question(render_template('bad_phone'))
+    api_key = '44876e6153c949ff812ce6dd8c823e1f'
 
     if int(user_phone[:1]) != 1 and len(str(user_phone)) != 10 or int(
             user_phone[:1]) == 1 and len(str(user_phone)) != 11:
@@ -53,13 +51,18 @@ def snoop(user_phone, api_key):
     except requests.exceptions.RequestException as reverse_error:
         return question(reverse_error)
 
-    if raw_reverse['belongs to'] == []:
+    if raw_reverse['belongs_to'] == []:
         return question(str(user_phone) + ' is rated as ' + str(
             rep_level) +'. It is an unlisted number.')
 
     else:
         return question(str(user_phone) + ' is rated as ' + str(rep_level)
                         + '. It belongs to ' + belongs_to + '.')
+
+#### Main
+if __name__ == "__main__":
+    app.config['ASK_VERIFY_REQUESTS'] = False
+    app.run()
 
 
 
