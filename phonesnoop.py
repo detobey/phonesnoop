@@ -4,6 +4,10 @@
 # Date:  10/11/2017
 # ChangeLog: (Who, When, What)
 # 10/11/2017: Psuedo Code
+# 10/17/2017: reputation_level and belongs_to is
+#   working. Add adjective selector for rep level
+#   (eg, 1 'rated highly trustworthy').
+#   Must also add address data.
 # -------------------------------------------------#
 
 #### Summary
