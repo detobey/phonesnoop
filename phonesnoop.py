@@ -22,7 +22,6 @@ from flask_ask import Ask, statement, question, session
 #### Skill Metadata
 app = Flask(__name__)
 ask = Ask(app, "/")
-#api_key = '44876e6153c949ff812ce6dd8c823e1f'
 
 #### Classes & Methods
 @ask.intent("snoop",
@@ -31,7 +30,8 @@ def snoop(user_phone):
 
     '''Interestingly, this variable is not passed to the 'snoop' method when
     defined outside the method itself.'''
-    api_key = '44876e6153c949ff812ce6dd8c823e1f'
+    api_file = open('/home/ubuntu/.ssh/api_key.txt', 'r')
+    api_key = api_file.read().replace('WHITEPAGES=', '').rstrip()
 
     if int(user_phone[:1]) != 1 and len(str(user_phone)) != 10 or int(
             user_phone[:1]) == 1 and len(str(user_phone)) != 11:
@@ -52,18 +52,37 @@ def snoop(user_phone):
             'https://proapi.whitepages.com/3.0/phone?phone=' +
             str(user_phone) + '&api_key=' + str(api_key))
         raw_reverse = raw_reverse.json()
-        belongs_to = raw_reverse['belongs_to'][1-1]['name']
+        belongs_to = raw_reverse['belongs_to'][1-1]['name'],'of',\
+                     raw_reverse['current_addresses'][1-1]['street_line_1'],\
+                     raw_reverse['current_addresses'][1-1]['city'],\
+                     raw_reverse['current_addresses'][1-1]['state_code'],\
+                     raw_reverse['current_addresses'][1-1]['postal_code']
 
     except requests.exceptions.RequestException as reverse_error:
         return question(reverse_error)
 
     if raw_reverse['belongs_to'] == []:
-        return question(str(user_phone) + ' is rated as ' + str(
+        return question(user_phone + ' is rated as ' + str(
             rep_level) +'. It is an unlisted number.')
 
     else:
-        return question(str(user_phone) + ' is rated as ' + str(rep_level)
-                        + '. It belongs to ' + belongs_to + '.')
+        return question(user_phone + ' is rated as ' + str(rep_level)
+                        + '. It belongs to ' + str(belongs_to) + '.')
+
+@ask.intent('AMAZON.StopIntent')
+def handle_stop():
+    stop_cancel = render_template('stop_cancel')
+    return statement(stop_cancel)
+
+@ask.intent('AMAZON.CancelIntent')
+def handle_cancel():
+    stop_cancel = render_template('stop_cancel')
+    return statement(stop_cancel)
+
+@ask.intent('AMAZON.HelpIntent')
+def handle_help():
+    greeting_help = render_template('help')
+    return question(greeting_help)
 
 #### Main
 if __name__ == "__main__":

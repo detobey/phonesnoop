@@ -1,3 +1,13 @@
-bad_phone: Sorry, that's not a phone number. Please enter a 10-digit standard U.S. number.
+help: |
+  Say 'snoop' followed by a U.S. ten digit phone number to identify the
+  reputation level and last known owner of a phone number. Reputation levels
+  are rated from 1, highly trustworthy, to 4, reputedly spam or fraud. All
+  data is courtesy of Whitepages.com.
+
+bad_phone: |
+  Sorry, that's not a phone number. Please enter a 10-digit standard U.S.
+  number.
 
 excess_digits: You have too many digits in that phone number.
+
+stop_cancel: Goodbye.
