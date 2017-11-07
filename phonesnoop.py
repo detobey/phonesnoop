@@ -8,6 +8,7 @@
 #   working. Add adjective selector for rep level
 #   (eg, 1 'rated highly trustworthy').
 #   Must also add address data.
+# 11/07/2017: populate templates yaml with new questions, statements
 # -------------------------------------------------#
 
 #### Summary
